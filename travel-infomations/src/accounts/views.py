@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 
 from .forms import UserLoginForm, UserRegisterForm
 
+
 def login_view(request):
     print(request.user.is_authenticated())
     next = request.GET.get('next')
@@ -22,7 +23,7 @@ def login_view(request):
         if next:
             return redirect(next)
         return redirect("/")
-    return render(request, "form.html", {"form":form, "title": title})
+    return render(request, "form.html", {"form": form, "title": title})
 
 
 def register_view(request):
