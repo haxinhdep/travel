@@ -1505,13 +1505,13 @@ button.subbtn:focus, button.subbtn:hover {
     float: left;
     width: 42%;
 }
-.login-right input[type="text"] ,.login-right input[type="password"] {
+.login-right input["email"] ,.login-right input[type="text"] ,.login-right input[type="password"] {
     width: 100%;
     padding: 10px;
     font-weight: normal;
     background: none;
-    border: 1px solid #E6E4E4;
-    color: #D2D1D1;
+    border: 1px solid #013ADF;
+    color: #151515;
     outline: none;
     font-size: 14px;
     margin-top: 20px;

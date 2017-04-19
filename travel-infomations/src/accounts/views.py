@@ -13,7 +13,7 @@ from .forms import UserLoginForm, UserRegisterForm
 def login_view(request):
     print(request.user.is_authenticated())
     next = request.GET.get('next')
-    title = "Login"
+    title = "Đăng Nhập"
     form = UserLoginForm(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data.get("username")
@@ -29,12 +29,15 @@ def login_view(request):
 def register_view(request):
     print(request.user.is_authenticated())
     next = request.GET.get('next')
-    title = "Register"
+    title = "Đăng Ký"
     form = UserRegisterForm(request.POST or None)
     if form.is_valid():
         user = form.save(commit=False)
         password = form.cleaned_data.get('password')
+        type_customers = form.cleaned_data.get('type')
         user.set_password(password)
+        if type_customers == 'partner':
+            user.is_staff = 1
         user.save()
         new_user = authenticate(username=user.username, password=password)
         login(request, new_user)

@@ -1,0 +1,250 @@
+{% extends "base_index.html" %}
+{%  load staticfiles %}
+{% block renderbody %}
+
+<div class="blog">
+		<div class="container">
+			<div class="col-md-8 blog-left">
+				<div class="comments-list hover14 column animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
+					<h3><a href="single1.html">Sự kiện nổi bật</a></h3>
+                        <div style="margin: 5px 0 0 0px">
+                            <form method='GET' action='' class='row'>
+                                    <div class='col-sm-6'>
+                                        <div class='input-group'>
+                                            <input class='form-control' type='text' name='q' placeholder='Tìm kiếm sự kiện nhanh' value='{{ request.GET.q }}'/>
+                                            <span class='input-group-btn'>
+                                                <!-- <input class='btn btn-default' type='submit' value='Search' /> -->
+                                                <button class='btn btn-default' type='submit'>Search <i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                    <br>
+                    {% for obj in object_list %}
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="thumbnail">
+                            {% if obj.image %}
+                             <img src='{{ obj.image.url }}' class='img-responsive' />
+                            {% endif %}
+                          <div class="caption post-detail-item">
+                            {% if obj.draft %}<h3>Staff only: Draft</h3>{% endif %} {% if obj.publish > today %}<h3>Staff Only: Future Post</h3>{% endif %}
+                            <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small>{{ obj.publish }}</small></h3>
+                            {% if obj.user.get_full_name %}<p>Author: {{ obj.user.get_full_name }}</p>{% endif %}
+                            {{ obj.get_markdown|truncatechars_html:120 }}
+                            <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">Xem Thêm</a></p>
+                          </div>
+                        </div>
+                      </div>
+                    <hr/>
+                    </div>
+                    {% endfor %}
+                    <!--<h3><a href="single1.html">abc</a></h3>-->
+					<!--<ul>-->
+
+						<!--<li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>31 March 2016 <i>|</i></li>-->
+						<!--<li><a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>3 Comments</a> <i>|</i></li>-->
+						<!--<li><a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>200 Likes</a> <i>|</i></li>-->
+						<!--<li><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>James Kale</a></li>-->
+					<!--</ul>-->
+					<!--<div>-->
+						<!--<figure><a href="single1.html"><img src="images/7.jpg" alt=" " class="img-responsive"></a></figure>-->
+					<!--</div>-->
+					<!--<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,-->
+						<!--adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore-->
+						<!--magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum-->
+						<!--exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi-->
+						<!--consequatur.</p>-->
+					<!--<div class="more">-->
+						<!--<a href="single1.html">More Info...</a>-->
+					<!--</div>-->
+				</div>
+				<!--<div class="comments-list hover14 column animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">-->
+					<!--<h3><a href="single1.html">Quis autem vel eum iure reprehe ea voluptate</a></h3>-->
+					<!--<ul>-->
+
+						<!--<li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>31 March 2016 <i>|</i></li>-->
+						<!--<li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a href="single1.html">3 Comments</a> <i>|</i></li>-->
+						<!--<li><a href="single1.html"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>200 Likes</a> <i>|</i></li>-->
+						<!--<li><a href="single1.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>James Kale</a></li>-->
+					<!--</ul>-->
+					<!--<div>-->
+						<!--<figure><a href="single1.html"><img src="images/3.jpg" alt=" " class="img-responsive"></a></figure>-->
+					<!--</div>-->
+					<!--<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,-->
+						<!--adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore-->
+						<!--magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum-->
+						<!--exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi-->
+						<!--consequatur.</p>-->
+					<!--<div class="more">-->
+						<!--<a href="single1.html">More Info...</a>-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="comments-list hover14 column animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">-->
+					<!--<h3><a href="single1.html">At vero eos et accusamus et iusto odio</a></h3>-->
+					<!--<ul>-->
+
+						<!--<li><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>31 March 2016 <i>|</i></li>-->
+						<!--<li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a href="single1.html">3 Comments</a> <i>|</i></li>-->
+						<!--<li><a href="single1.html"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>200 Likes</a> <i>|</i></li>-->
+						<!--<li><a href="single1.html"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>James Kale</a></li>-->
+					<!--</ul>-->
+					<!--<div>-->
+						<!--<figure><a href="single1.html"><img src="images/1.jpg" alt=" " class="img-responsive"></a></figure>-->
+					<!--</div>-->
+					<!--<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,-->
+						<!--adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore-->
+						<!--magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum-->
+						<!--exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi-->
+						<!--consequatur.</p>-->
+					<!--<div class="more">-->
+						<!--<a href="single1.html">More Info...</a>-->
+					<!--</div>-->
+				<!--</div>-->
+				<nav>
+				  <ul class="pagination paging animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
+					<li>
+						        {% if object_list.has_previous %}
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">«</a>
+        {% endif %}
+
+					</li>
+					  <li>
+						  {% if object_list.paginator.num_pages > 1 %}
+						  <a href="#">Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}</a></li>
+					{% endif %}
+					  <li>
+						{% if object_list.has_next %}
+            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><span aria-hidden="true">»</span></a>
+        {% endif %}
+
+					</li>
+				  </ul>
+				</nav>
+
+			</div>
+
+			<div class="col-md-4 blog-right">
+				<div class="popular animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
+					<h3>Most Popular</h3>
+					<div class="popular-grid">
+						<div class="popular-left">
+							<h4>01.</h4>
+						</div>
+						<div class="popular-right">
+							<h5><a href="single1.html">deleniti atque</a></h5>
+							<p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+								reiciendis.<span>1 Month Ago...</span></p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="popular-grid">
+						<div class="popular-left">
+							<h4>02.</h4>
+						</div>
+						<div class="popular-right">
+							<h5><a href="single1.html">sapiente delectus</a></h5>
+							<p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+								reiciendis.<span>15 Days Ago...</span></p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="popular-grid">
+						<div class="popular-left">
+							<h4>03.</h4>
+						</div>
+						<div class="popular-right">
+							<h5><a href="single1.html">rerum hic tenetur</a></h5>
+							<p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+								reiciendis.<span>5 Days Ago...</span></p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<div class="subscribe animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
+					<h3>Subscribe</h3>
+					<p>Subscribe for daily Travels.</p>
+					<form>
+						<input type="email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+						<input type="submit" value="Submit">
+					</form>
+				</div>
+				<div class="categories animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
+					<h3>Categories</h3>
+					<ul>
+						<li><a href="single1.html">tenetur a sapiente delectus</a></li>
+						<li><a href="single1.html">Itaque earum rerum hic tenetur</a></li>
+						<li><a href="single1.html">qui dolorem eum fugiat quo</a></li>
+						<li><a href="single1.html">voluptas a asperiores delectus</a></li>
+						<li><a href="single1.html">perferendis doloribus repellat</a></li>
+						<li><a href="single1.html">eligendi optio cumque nihil</a></li>
+					</ul>
+				</div>
+				<div class="instagram animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
+					<h2>Instagram Posts</h2>
+					<div class="instagram-grids">
+						<div class="instagram-grid">
+							<a href="single1.html"><img src="images/h2.jpg" alt=" " class="img-responsive"></a>
+						</div>
+						<div class="instagram-grid">
+							<a href="single1.html"><img src="images/h3.jpg" alt=" " class="img-responsive"></a>
+						</div>
+						<div class="instagram-grid">
+							<a href="single1.html"><img src="images/h4.jpg" alt=" " class="img-responsive"></a>
+						</div>
+						<div class="instagram-grid">
+							<a href="single1.html"><img src="images/c3.jpg" alt=" " class="img-responsive"></a>
+						</div>
+						<div class="instagram-grid">
+							<a href="single1.html"><img src="images/c4.jpg" alt=" " class="img-responsive"></a>
+						</div>
+						<div class="instagram-grid">
+							<a href="single1.html"><img src="images/c5.jpg" alt=" " class="img-responsive"></a>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<div class="tags animated wow fadeInUp animated" data-wow-duration="1200ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 500ms; animation-name: fadeInUp;">
+					<h3>Recent Tags</h3>
+					<ul>
+						<li>
+							<a href="single1.html">Hotels</a>
+						</li>
+						<li>
+							<a href="single1.html">Travels</a>
+						</li>
+						<li>
+							<a href="single1.html">Reservations</a>
+						</li>
+						<li>
+							<a href="single1.html">Booking</a>
+						</li>
+						<li>
+							<a href="single1.html">Cottage</a>
+						</li>
+						<li>
+							<a href="single1.html">Services</a>
+						</li>
+						<li>
+							<a href="single1.html">Hotels</a>
+						</li>
+						<li>
+							<a href="single1.html">Travels</a>
+						</li>
+						<li>
+							<a href="single1.html">Reservations</a>
+						</li>
+						<li>
+							<a href="single1.html">Booking</a>
+						</li>
+						<li>
+							<a href="single1.html">Services</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+{% endblock %}

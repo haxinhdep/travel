@@ -123,7 +123,7 @@ def post_list(request):
 		"page_request_var": page_request_var,
 		"today": today,
 	}
-	return render(request, "post_list.html", context)
+	return render(request, "event.html", context)
 
 
 
