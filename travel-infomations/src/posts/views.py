@@ -25,7 +25,7 @@ from .models import Post
 
 
 def post_create(request):
-	if not request.user.is_staff or not request.user.is_superuser:
+	if not request.user.is_staff :
 		raise Http404
 		
 	form = PostForm(request.POST or None, request.FILES or None)
