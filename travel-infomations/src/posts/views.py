@@ -21,25 +21,90 @@ from comments.forms import CommentForm
 from comments.models import Comment
 from .forms import PostForm
 from .models import Post
+import requests
+from bs4 import BeautifulSoup
 
+
+def url_link_spider(url_link, title, img):
+    url = url_link
+    source_code = requests.get(url)
+    plain_text = source_code.text
+    soup = BeautifulSoup(plain_text)
+    content = ''
+    draw = Post()
+    i = 1
+    for h4 in soup.findAll('h4', {'style': 'text-align: justify;'}):
+        content1 = h4.string
+        if content1 is not None:
+           content +=content1
+        i += 1
+    i = 1
+    for p in soup.findAll('p', {'style': 'text-align: justify;'}):
+        content2 = p.string
+        if content2 is not None:
+           content += content2
+        i += 1
+    i = 1
+    for p in soup.findAll('p'):
+        content3 = p.string
+        if content3 is not None:
+           content += content3
+    i += 1
+    for date in soup.find('div', {'class': 'date'}):
+        date = date.string
+        if date is not None:
+            draw.publish = '2017-06-12'
+        i += 1
+    draw.content = content
+    draw.title = title
+    # draw.image = img
+    draw.is_browse = True
+    draw.save()
+
+def trade_spider():
+    url = 'http://tourism.danang.vn/su-kien-noi-bat'
+    source_code = requests.get(url)
+    plain_text = source_code.text
+    soup = BeautifulSoup(plain_text)
+
+    i = 1
+    for div in soup.findAll('div', {'class': 'post-thumb preload image-loading zoom-img-in'}):
+        title = div.img.get('alt')
+        href = div.a.get('href')
+        img = div.img.get('src')
+        url_link_spider(href, title, img)
+        i += 1
+
+
+def draw(request):
+    if not request.user.is_superuser:
+        raise Http404
+    trade_spider()
+    return render(request, "post_form.html")
 
 
 def post_create(request):
-	if not request.user.is_staff :
-		raise Http404
-		
-	form = PostForm(request.POST or None, request.FILES or None)
-	if form.is_valid():
-		instance = form.save(commit=False)
-		instance.user = request.user
-		instance.save()
-		# message success
-		messages.success(request, "Successfully Created")
-		return HttpResponseRedirect(instance.get_absolute_url())
-	context = {
-		"form": form,
-	}
-	return render(request, "post_form.html", context)
+    if not request.user.is_staff :
+        raise Http404
+
+    form = PostForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.user = request.user
+
+        if(instance.is_browse and request.user.is_superuser):
+            instance.save()
+            return HttpResponseRedirect(instance.get_absolute_url())
+        if (instance.is_browse == False  and request.user.is_staff):
+            instance.save()
+            messages.success(request, "Post event thành công, chờ kiểm duyệt")
+        if(instance.is_browse and request.user.is_staff):
+            messages.warning(request, "Bạn không có quyền thực hiện kiểm duyệt")
+
+    context = {
+     "form": form,
+    }
+    return render(request, "post_form.html", context)
 
 def post_detail(request, slug=None):
 	instance = get_object_or_404(Post, slug=slug)
@@ -92,10 +157,10 @@ def post_detail(request, slug=None):
 
 def post_list(request):
 	today = timezone.now().date()
-	queryset_list = Post.objects.active() #.order_by("-timestamp")
+	queryset_list = Post.objects.active().order_by("-timestamp")
 	if request.user.is_staff or request.user.is_superuser:
 		queryset_list = Post.objects.all()
-	
+
 	query = request.GET.get("q")
 	if query:
 		queryset_list = queryset_list.filter(
@@ -118,7 +183,7 @@ def post_list(request):
 
 
 	context = {
-		"object_list": queryset, 
+		"object_list": queryset,
 		"title": "List",
 		"page_request_var": page_request_var,
 		"today": today,

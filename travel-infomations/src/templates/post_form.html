@@ -1,16 +1,12 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-
-{% block head_extra %} 
+{% block content %}
+<div class='col-sm-6'>
+    {% block head_extra %}
 {{ form.media }}
 
 {% endblock head_extra %}
-
-
-
-{% block content %}
-<div class='col-sm-6'>
-<h1>Preview</h1>
+<h1>Xem trước</h1>
 <hr/>
 <div class='content-preview'>
     <h3 id='preview-title'></h3>

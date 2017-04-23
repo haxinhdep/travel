@@ -51,7 +51,9 @@ INSTALLED_APPS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
+DATE_INPUT_FORMATS = ('%d-%m-%Y')
+USE_I18N = True
+USE_L10N = True
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

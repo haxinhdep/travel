@@ -24,7 +24,7 @@ from .utils import get_read_time
 class PostManager(models.Manager):
     def active(self, *args, **kwargs):
         # Post.objects.all() = super(PostManager, self).all()
-        return super(PostManager, self).filter(draft=False).filter(publish__lte=timezone.now())
+        return super(PostManager, self).filter(is_browse=True).filter(publish__lte=timezone.now())
 
 
 def upload_location(instance, filename):
@@ -55,10 +55,10 @@ class Post(models.Model):
     content = models.TextField()
     draft = models.BooleanField(default=False)
     publish = models.DateField(auto_now=False, auto_now_add=False)
-    read_time =  models.IntegerField(default=0) # models.TimeField(null=True, blank=True) #assume minutes
+    read_time = models.IntegerField(default=0) # models.TimeField(null=True, blank=True) #assume minutes
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-
+    is_browse = models.BooleanField(default=False)
     objects = PostManager()
 
     def __unicode__(self):

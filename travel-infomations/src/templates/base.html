@@ -31,7 +31,7 @@ fjs.parentNode.insertBefore(js, fjs);
 
 
 
-{% include "messages_display.html" %}
+
 <div class='container'> 
     <ol class='breadcrumb'>
         <li><a href='{% url "posts:list" %}'>Home</a></li>
@@ -45,6 +45,7 @@ fjs.parentNode.insertBefore(js, fjs);
         <li class='pull-right'><a href='{% url "logout" %}'>Logout</a></li>
         {% endif %}
     </ol>
+    {% include "messages_display.html" %}
 {% block content %}{% endblock content %}
 </div>
 
